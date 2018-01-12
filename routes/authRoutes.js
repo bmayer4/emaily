@@ -10,4 +10,13 @@ app.get('/auth/google', passport.authenticate('google', {
 
 app.get('/auth/google/callback', passport.authenticate('google'));
 
+app.get('/api/logout', (req, res) => {
+    req.logout();             //passport attaches logout function to request object
+    res.send(req.user);  //should be empty
+});
+
+app.get('/api/current_user', (req, res) => {
+    res.send(req.user);  //passport attaches user property to req object
+});
+
 }
