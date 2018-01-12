@@ -21,7 +21,8 @@ passport.deserializeUser((id, done) => {  //first arg is token we had prev stuff
 passport.use(new GoogleStrategy({
     clientID: keys.googleClientID,
     clientSecret: keys.googleClientSecret,
-    callbackURL: '/auth/google/callback'
+    callbackURL: '/auth/google/callback',
+    proxy: true    //if our request runs through any proxy, use https
 }, (accessToken, refreshToken, profile, done) => {  //done is a calback we have to call after we've done some work of nudging passport along
     console.log('Profile: ', profile.id);
     User.findOne({googleId: profile.id}).then((user) => {  //the user we return here is what is passed to serialize user
