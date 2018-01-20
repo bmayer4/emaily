@@ -23,20 +23,18 @@ passport.use(new GoogleStrategy({
     clientSecret: keys.googleClientSecret,
     callbackURL: '/auth/google/callback',
     proxy: true    //if our request runs through any proxy, use https
-}, (accessToken, refreshToken, profile, done) => {  //done is a calback we have to call after we've done some work of nudging passport along
+}, async (accessToken, refreshToken, profile, done) => {  //done is a callback we have to call after we've done some work of nudging passport along
     console.log('Profile: ', profile.id);
-    User.findOne({googleId: profile.id}).then((user) => {  //the user we return here is what is passed to serialize user
-        if (user) {
-            //we already have a record for this profile id
-            done(null, user);  //first is error
-        } else {
-            //no record with this id, we want to create a new user
-            new User({googleId: profile.id}).save().then((user) => {
-                done(null, user);
-            });
-        }
+    const existingUser = await User.findOne({googleId: profile.id});  //the user we return here is what is passed to serialize user
+        if (existingUser) {
+            return done(null, existingUser); 
+        } 
+         
+        //this won't run if existingUser because we used return 
+        const user = await new User({googleId: profile.id}).save();
+        done(null, user);
     })
-}));
+);
 
 
 //*** OAuths purpose is to allow use to sign in. After that, we use our own internal ID's

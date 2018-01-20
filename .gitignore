@@ -1,3 +1,5 @@
 node_modules/
 notes/
 config/dev.js
+.env.production
+.env.development
