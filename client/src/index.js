@@ -12,6 +12,3 @@ const store = createStore(reducers, {}, applyMiddleware(thunk));
 
 ReactDOM.render(<Provider store={store}><App/></Provider>, document.getElementById('root'));
 
-console.log(process.env.REACT_APP_STRIPE_KEY);
-console.log(process.env.NODE_ENV);
-

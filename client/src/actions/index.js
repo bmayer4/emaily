@@ -23,3 +23,13 @@ export const fetchUser = () =>
 //         });
 //     };
 // };
+
+export const handleToken = (token) => 
+async (dispatch, getState) => {
+    console.log('from action: ', token);
+    const res = await axios.post('/api/stripe/', token);
+        dispatch({   //shortcut, since user model with credit amount is returned to anything that uses the state
+            type: FETCH_USER,
+            payload: res.data
+        });
+};

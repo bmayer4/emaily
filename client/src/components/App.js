@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import Header from '../components/Header';
 import { connect } from 'react-redux';
+
 import { fetchUser } from '../actions/index';
 import Landing from '../components/Landing';
 
