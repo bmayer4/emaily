@@ -30,7 +30,7 @@ const SurveyFormReview = (props) => {
           <button className="yellow darken-3 white-text btn-flat" onClick={props.onCancel}>
             Back
           </button>
-          <button className="green btn-flat white-text right" onClick={submitSurvey}>
+          <button className="cyan darken-1 btn-flat white-text right" onClick={submitSurvey}>
           Send Survey
           </button>
         </div>
