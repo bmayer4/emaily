@@ -36,12 +36,6 @@ class SurveyList extends Component {
     }
 };
 
-// {
-//     this.props.surveys.length === 0 ? (<div><span>No Surveys</span></div>) : 
-//     this.props.surveys.surveys.map((survey) => {
-//         console.log(survey.title);
-//     })
-// }
 
 const mapStateToProps = (state, props) => {
     return {
