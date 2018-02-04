@@ -6,6 +6,7 @@ const requireLogin = require('../middleware/requireLogin');
 const requireCredits = require('../middleware/requireCredits');
 const Mailer = require('../services/Mailer');
 const surveyTemplate = require('../services/emailTemplates/surveyTemplate');
+const {ObjectID} = require('mongodb');
 
 const Survey = mongoose.model('Survey');
 
@@ -82,6 +83,22 @@ module.exports = (app) => {
             res.send(user);
           } catch (err) {
             res.status(422).send(err);
+          }
+  });
+
+  app.delete('/api/surveys/:id', requireLogin, async (req, res) => {
+        let id = req.params.id;
+
+        if (!ObjectID.isValid(id)) {
+            res.status(404).send();
+            console.log('invalid id');
+          }
+
+        try {
+            const survey = await Survey.findOneAndRemove({_id: id, _user: req.user.id});
+            res.send({survey});
+          } catch (err) {
+            res.status(400).send(err);
           }
   });
 
