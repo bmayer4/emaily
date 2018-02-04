@@ -11,7 +11,7 @@ app.post('/api/stripe/', requireLogin, async (req, res) => {
         currency: 'usd',
         description: 'Purchase 5 credits for $5',
         source: req.body.id    //token object id sent from stripe after form is submitted.
-    })
+    });
 
     console.log(charge);
     //get a reference to the current user model, w passport a signed in user can be accessed with req.user

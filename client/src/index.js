@@ -8,6 +8,9 @@ import thunk from 'redux-thunk';
 import reducers from './reducers/index';   //I can leave index off
 import App from './components/App';
 
+// import axios from 'axios';
+// window.axios = axios;
+
 const store = createStore(reducers, {}, applyMiddleware(thunk));  
 
 ReactDOM.render(<Provider store={store}><App/></Provider>, document.getElementById('root'));

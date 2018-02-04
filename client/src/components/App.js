@@ -1,13 +1,15 @@
 import React, { Component } from 'react';  
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Router } from 'react-router-dom';  //replaced BrowserRouter with Router to use history
 import Header from '../components/Header';
 import { connect } from 'react-redux';
 
 import { fetchUser } from '../actions/index';
 import Landing from '../components/Landing';
+import Dashboard from './Dashboard';
+import SurveyNew from './surveys/SurveyNew';
 
-const Dashboard = () => (<h2>Dashboard</h2>)
-const SurveyNew = () => (<h2>SurveyNew</h2>)
+import createHistory from 'history/createBrowserHistory';  //I didn't need to install anything here
+export const history = createHistory();
 
 
 
@@ -20,16 +22,14 @@ class App extends Component {
 
     render() {
         return (
+            <Router history={history}>
             <div className="container">
-            <BrowserRouter>
-            <div>
             <Header />
             <Route path="/" component={Landing} exact />
             <Route path="/surveys" component={Dashboard} exact />
             <Route path="/surveys/new" component={SurveyNew} />
             </div>
-            </BrowserRouter>
-            </div>
+            </Router>
         );
     }
 };

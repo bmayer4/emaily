@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FETCH_USER } from './types';
+import { FETCH_USER, FETCH_SURVEYS } from './types';
 
 
 export const fetchUser = () => 
@@ -27,9 +27,29 @@ export const fetchUser = () =>
 export const handleToken = (token) => 
 async (dispatch, getState) => {
     console.log('from action: ', token);
-    const res = await axios.post('/api/stripe/', token);
+    const res = await axios.post('/api/stripe', token);
         dispatch({   //shortcut, since user model with credit amount is returned to anything that uses the state
             type: FETCH_USER,
+            payload: res.data
+        });
+};
+
+
+export const submitSurvey = (values) => 
+    async (dispatch, getState) => {
+        console.log('values: ', values);
+        const res = await axios.post('/api/surveys', values);  //returns user
+            dispatch({  
+                type: FETCH_USER,
+                payload: res.data
+        });
+};
+
+export const fetchSurveys = () => 
+    async (dispatch, getState) => {
+        const res = await axios.get('/api/surveys');
+        dispatch({
+            type: FETCH_SURVEYS,
             payload: res.data
         });
 };

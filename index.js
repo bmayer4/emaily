@@ -5,10 +5,13 @@ const passport = require('passport');
 const bodyParser = require('body-parser');
 
 const keys = require('./config/keys');
-require('./models/User.js');  //make sure this is required before anything that depends on it
+require('./models/User');  //make sure this is required before anything that depends on it
+require('./models/Survey');
 require('./services/passport');  //we aren't pulling anything out of this file, nothing was exported
+require('./models/Survey');
 const authRoutes = require('./routes/authRoutes');  //authRoutes is a function that takes app arg
 const billingRoutes = require('./routes/billingRoutes');
+const surveyRoutes = require('./routes/surveyRoutes');
 
 //mongoURI is from mlab
 mongoose.connect(keys.mongoURI);
@@ -27,11 +30,12 @@ app.use(passport.session());
 
 authRoutes(app);
 billingRoutes(app);
+surveyRoutes(app);
 
 if (process.env.NODE_ENV === 'production') {
     //make sure express will server up production assets, like our main.js file, or main.css file
     //for a particular file in a particular directory
-    //if can't recognize route or file being requested, lool ino client/build directory for it
+    //if can't recognize route or file being requested, look into client/build directory for it
     app.use(express.static('client/build'));
 
     //if above doesn't match what is being requested, below is like a catch all (order is important)
