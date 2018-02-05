@@ -4,24 +4,28 @@ import { connect } from 'react-redux';
 
 class SurveyList extends Component {
 
+    state = {
+        limit: 5
+    }
+
     componentDidMount = () => {
         this.props.fetchSurveys()
     }
-
-    // componentWillUpdate() {
-    //     console.log('componentWillUpdate called');
-    //     this.props.fetchSurveys()
-    // }
-    
 
     removeClicked = (id) => {
         this.props.removeSurvey(id);
     }
 
+    showMore = () => {
+        this.setState((prevState) => ({
+            limit: prevState.limit + 5
+        }));
+    }
+
     render() {
         return (
             <div>
-            {this.props.surveys && this.props.surveys.reverse().map((survey) => {
+            {this.props.surveys && this.props.surveys.slice(0, this.state.limit).map((survey) => {
                 return (
                             <div className="card darken-1" key={survey._id}>
                             <div className="card-content">
@@ -37,6 +41,11 @@ class SurveyList extends Component {
                           </div>
                         )
             })}
+            {
+                this.props.surveys.length > this.state.limit ?
+                <div><button className="btn cyan darken-1" style={{marginBottom: "30px"}} onClick={this.showMore}>Show More</button></div>
+                : null
+            }
             </div>
         );
     }
